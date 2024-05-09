@@ -9,8 +9,8 @@ import { scrollView } from "../../../style/scrollview/scrollview";
 
 const {width} = Dimensions.get('window');
 
-function Cart() {
-    const { cartItems, increaseQuantity, decreaseQuantity } = useContext(CartContext);
+function Cart({navigation}) {
+    const { cartItems,subTotal , increaseQuantity, decreaseQuantity } = useContext(CartContext);
     const cartEmpty = cartItems.length === 0
     return (
         <View style={ globalStyle.container}>
@@ -46,7 +46,8 @@ function Cart() {
                     )
                 })
             }
-                        <ButtonAnimation style={cartStyle.checkoutButton}>
+            <Text>Your total is: {subTotal}</Text>
+                        <ButtonAnimation style={cartStyle.checkoutButton} onPress={() => navigation.navigate('Paypal')}>
                             <Text style={cartStyle.checkoutText}>Proceed to checkout</Text>
                         </ButtonAnimation>
                     </ScrollView>

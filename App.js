@@ -1,14 +1,15 @@
 import Register from './project/FEL/register/Register';
 import {NavigationContainer} from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React,{useState} from 'react'
+import React from 'react'
 import RegisterOrLogin from './project/FEL/RegisterOrLogin';
-import Payment from './project/FEL/register/Payment';
 import Catalog from './project/FEL/Items/catalog';
 import Login from './project/FEL/login/login';
 import Cart from './project/FEL/Items/cart';
+import Favorite from './project/FEL/Items/favorite';
 import { CartProvider } from './project/BLL/CartContext';
 import { CustomHeaderTitle } from './project/FEL/CustomHeaderTile';
+import Paypal from './project/BLL/Payments/Paypal';
 
 
 //Go to the RegisterOrLogin screen
@@ -21,12 +22,6 @@ function RegisterOrLoginScreen({navigation}){
 function RegisterScreen({navigation}){
   return(
     <Register navigation={navigation}/>
-  )
-}
-//Go to the payment screen (NOT DONE MAY CHANGE)
-function PaymentScreen({navigation}){
-  return(
-    <Payment navigation={navigation}/>
   )
 }
 //Go to the catalog Screen
@@ -42,16 +37,24 @@ function LoginScreen({navigation}){
   )
 }
 //Go to the cart screen
-function CartScreen(){
+function CartScreen({navigation}){
   return(
-    <Cart/> 
+    <Cart navigation={navigation}/> 
   )
 }
-
+//Go to favorite screen
+function FavoriteScreen(){
+  return(
+    <Favorite/>
+  )
+}
+//go to the paypal screen
+function PaypalScreen(){
+  return <Paypal/>
+}
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [isLoggedIn, setisLoggedIn] = useState(false)
 
   return (
       <CartProvider>
@@ -63,17 +66,16 @@ export default function App() {
         <Stack.Screen name="Register" component={RegisterScreen} options={{
            title:'Register your account' 
         }}/>
-        <Stack.Screen name="Payment" component={PaymentScreen} options={{
-          title:'Payment information'
-        }}/>
         <Stack.Screen name="Catalog" component={CatalogScreen} options={{
           title: "Catalog",
-          headerRight: () => (<CustomHeaderTitle updateIsLoggedIn={isLoggedIn} setisLoggedIn={setisLoggedIn} />)
+          headerRight: () => (<CustomHeaderTitle />)
         }}/>
         <Stack.Screen name="Cart" component={CartScreen} options={{
-          headerRight: () => (<CustomHeaderTitle updateIsLoggedIn={isLoggedIn} setisLoggedIn={setisLoggedIn}/>)
+          headerRight: () => (<CustomHeaderTitle />)
         }}/>
-        <Stack.Screen name="Login" component={LoginScreen} options={{title:'Login'}} initialParams={{updateIsLoggedIn: setisLoggedIn}} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{title:'Login'}} />
+        <Stack.Screen name="Favorites" component={FavoriteScreen}/>
+        <Stack.Screen name="Paypal" component={PaypalScreen}/>
         
       </Stack.Navigator>
     </NavigationContainer>

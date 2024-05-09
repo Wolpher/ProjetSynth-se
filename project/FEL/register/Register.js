@@ -13,9 +13,11 @@ function Register({ navigation }) {
 
     const handleRegistration = async () => {
         try{
+            //Create the user in firebase
             const user = await createUser(Email, Password, {Name});
             console.log("New user created:", user.uid)
-            navigation.navigate('Payment');
+            //Go to the login page
+            navigation.navigate('Login');
         }catch (error){
             console.error("Error create user:", error);
             Alert.alert("Error", "Faile to create user. Please try again")

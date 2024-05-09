@@ -22,12 +22,13 @@ if (firebase.apps.length === 0) {
 // Référence à la base de données Firebase
 const database = getDatabase();
 
-const createUser = async (email, password, additionData) => {
+const createUser = async (email, password, additionnalData) => {
   try{
+    //add the user in the database
     const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
   const user = userCredential.user;
-
-  await set(ref( database, `users/${user.uid}`), additionData)
+  
+    await set(ref( database, `users/${user.uid}`), additionnalData)
 
   return user;
   }catch(error){

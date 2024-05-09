@@ -1,13 +1,10 @@
 import { View, Text, TextInput, Pressable, Alert } from "react-native"
 import React, { useState } from "react"
 import firebase from "firebase/compat"
-import {useRoute} from '@react-navigation/native'
 import { registerOrLoginStyle } from "../../../style/register_login/registerOrLogin"
 import { globalStyle } from "../../../style/global"
 
 function Login({navigation}){
-    const route = useRoute()
-    const {updateIsLoggedIn} = route.params
     const [Email, setEmail] = useState('')
     const [Password, setPassword] = useState('')
 
@@ -20,11 +17,11 @@ function Login({navigation}){
     }
 
     const handleLogin = () => {
+        //Check if the user is in the database and if he his he get is login
         firebase.auth().signInWithEmailAndPassword(Email, Password)
             .then((userCredential) =>{
                 const user = userCredential.user;
-                console.log('Utilisateur connecté avec l\'adresse e-mail:', user.Nom);
-                updateIsLoggedIn(true)
+                //navigate to the catalog page
                 navigation.navigate('Catalog', {user:user.email});
             })
             .catch((error) => {
